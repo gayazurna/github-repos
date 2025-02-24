@@ -11,6 +11,7 @@ export default class Auth extends Component {
   @service declare store: Store;
 
   @tracked authToken = '';
+  @tracked isLoading = false;
 
   constructor(owner: unknown, args: unknown) {
     super(owner, args);
@@ -24,12 +25,16 @@ export default class Auth extends Component {
   }
 
   @action
-  login() {
-    this.session.setAuthToken(this.authToken);
+  async login() {
+    this.isLoading = true;
+    await this.session.setAuthToken(this.authToken);
+    this.isLoading = false;
   }
 
   <template>
-    <div>
+    <div
+      class="min-h-screen flex items-center justify-center bg-background px-4"
+    >
       <form>
         <label for="auth-token">Auth Token</label>
         <input

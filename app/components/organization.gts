@@ -46,15 +46,34 @@ export default class Organization extends Component {
       <button type="button" {{on "click" this.loadOrganization}}>Load</button>
       {{#each this.repos as |repo|}}
         <div>
-          <h2>Repo Name: {{repo.name}}</h2>
-          <p>Repo Url: {{repo.url}}</p>
-          <p>Private/public: {{repo.private}}</p>
-          <p>Repo description: {{repo.description}}</p>
+          <h2>
+            <a
+              href="https://github.com/{{repo.fullName}}"
+              alt="{{repo.name}}"
+            >{{repo.name}}</a>
+          </h2>
+          <p>
+            {{#if repo.private}}
+              Private
+            {{else}}
+              Public
+            {{/if}}
+          </p>
+          <p>Description: {{repo.description}}</p>
           <p>Language: {{repo.language}}</p>
           <p>Number of branches: {{repo.branches.length}}</p>
-          {{#each repo.branches as |branch|}}
-            <p>Branch name: {{branch.name}}</p>
-          {{/each}}
+          <ul>
+            {{#each repo.branches as |branch|}}
+              <li>
+                <a
+                  href="https://github.com/{{repo.fullName}}/tree/{{branch.name}}"
+                  alt="{{branch.name}}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >{{branch.name}}</a>
+              </li>
+            {{/each}}
+          </ul>
         </div>
       {{/each}}
     </div>

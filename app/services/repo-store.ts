@@ -15,6 +15,7 @@ export type BranchResponse = {
 export type RepoResponse = {
   id: number;
   name: string;
+  full_name: string;
   description: string;
   url: string;
   language: string;
@@ -50,7 +51,13 @@ export default class RepoStoreService extends Service {
       data: res.content.map((repo: RepoResponse) => ({
         type: 'repo',
         id: repo.id.toString(),
-        attributes: repo,
+        attributes: {
+          name: repo.name,
+          fullName: repo.full_name,
+          description: repo.description,
+          url: repo.url,
+          language: repo.language,
+        },
       })),
     });
 
